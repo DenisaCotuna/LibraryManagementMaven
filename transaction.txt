@@ -1,0 +1,7 @@
+album
+A123
+3
+book
+B666
+borrow
+4

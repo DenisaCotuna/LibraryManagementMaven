@@ -1,0 +1,30 @@
+Book
+B1234
+40.00
+Amintiri din copilarie
+Ion Creanga
+5
+Album
+A123
+125.0
+5-Star
+Stray Kids
+25
+Book
+B666
+30.00
+Ion
+Liviu Rebreanu
+10
+Album
+A777
+100.00
+Kill my doubt
+Itzy
+16
+Album
+A546
+75.00
+Fe3O4
+Nmixx
+20

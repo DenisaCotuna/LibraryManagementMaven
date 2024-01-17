@@ -1,0 +1,5 @@
+Book: ID = B1234 price = 40.0 title = Amintiri din copilarie author = Ion Creanga number of copies = 5 number of borrowed copies = 0
+Book: ID = B666 price = 30.0 title = Ion author = Liviu Rebreanu number of copies = 6 number of borrowed copies = 4
+Album: ID = A123 price = 125.0 title = 5-Star artist = Stray Kids number of copies = 22
+Album: ID = A777 price = 100.0 title = Kill my doubt artist = Itzy number of copies = 16
+Album: ID = A546 price = 75.0 title = Fe3O4 artist = Nmixx number of copies = 20
