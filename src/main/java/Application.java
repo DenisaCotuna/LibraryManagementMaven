@@ -105,7 +105,6 @@ public class Application {
 
     public void transactionFromFile(String filename)throws IOException, NegativeNumberException,NotEnoughCopiesException, InvalidItemTypeException{
         try(BufferedReader reader = new BufferedReader(new FileReader(filename))){
-            noTransaction++;
             Transaction newTransaction = new Transaction(noTransaction);
             String itemtype;
             while ((itemtype = reader.readLine()) != null){
@@ -211,6 +210,7 @@ public class Application {
     public void run() throws IOException, NegativeNumberException, NotEnoughCopiesException, InvalidItemTypeException {
         DatabaseCommands db = new DatabaseCommands();
         db.createNewTable();
+        db.createNewTableTransactions();
         while (true)
         {
             System.out.println("Hello! What would you like to do?");
@@ -222,6 +222,8 @@ public class Application {
             String cmd = id.read();
             if(cmd.equals("exit"))
             {
+                db.deleteAll();
+                db.deleteAllTransaction();
                 System.exit(0);
             }else if(cmd.equals("1"))
             {
@@ -234,10 +236,10 @@ public class Application {
                         String filename = id.read();
                         addItemsFromFIle(filename);
                         for(Book b:inventory.getBooks()){
-                            db.insert(b.getID(),b.getCopies());
+                            db.insert(b.getID(),b.getTitle(),b.getCopies());
                         }
                         for(Album a: inventory.getAlbums()){
-                            db.insert(a.getID(),a.getCopies());
+                            db.insert(a.getID(),a.getTitle(),a.getCopies());
                         }
                         db.printAllContent();
                     }
@@ -269,6 +271,12 @@ public class Application {
                                         NoCopies = Integer.parseInt(noCopies);
                                         if(NoCopies <= 0) throw new NegativeNumberException("Number of copies <= 0");
                                         inventory.addBook(idbook, price, title, author, NoCopies);
+                                        for (Book b1 : inventory.getBooks())
+                                            if(b1.getID().equals(idbook))
+                                            {
+                                                db.update(idbook,title,b1.getCopies());
+                                            }
+                                        db.printAllContent();
                                     } else {
                                         System.out.println("The book is not in the inventory. You will need to give extra information \n What's the price of the book?");
                                         price = Double.parseDouble(id.read());
@@ -281,6 +289,8 @@ public class Application {
                                         NoCopies = Integer.parseInt(id.read());
                                         if(NoCopies <= 0) throw new NegativeNumberException("Number of copies <= 0");
                                         inventory.addBook(idbook,price,title,author,NoCopies);
+                                        db.insert(idbook,title,NoCopies);
+                                        db.printAllContent();
                                     }
                                 }catch (NumberFormatException e){
                                     e.printStackTrace();
@@ -322,6 +332,12 @@ public class Application {
                                         NoCopies = Integer.parseInt(noCopies);
                                         if(NoCopies <= 0) throw new NegativeNumberException("Number of copies <= 0");
                                         inventory.addAlbum(idalbum, price, title, artist, NoCopies);
+                                        for (Album a1 : inventory.getAlbums())
+                                            if(a1.getID().equals(idalbum))
+                                            {
+                                                db.update(idalbum,title,a1.getCopies());
+                                            }
+                                        db.printAllContent();
                                     } else {
                                         System.out.println("The album is not in the inventory. You will need to give extra information \n What's the price of the album?");
                                         price = Double.parseDouble(id.read());
@@ -330,10 +346,12 @@ public class Application {
                                         title = id.read();
                                         System.out.println("What's the artist of the album?");
                                         artist = id.read();
-                                        System.out.println("How many copies of the book would you like to add?");
+                                        System.out.println("How many copies of the album would you like to add?");
                                         NoCopies = Integer.parseInt(id.read());
                                         if(NoCopies <= 0) throw new NegativeNumberException("Number of copies <= 0");
                                         inventory.addAlbum(idalbum,price,title,artist,NoCopies);
+                                        db.insert(idalbum,title,NoCopies);
+                                        db.printAllContent();
                                     }
                                 }catch (NumberFormatException e){
                                     e.printStackTrace();
@@ -369,7 +387,10 @@ public class Application {
                     if(answer.equals("file")){
                         System.out.println("Type the name of the file you wish to add input from.");
                         String filename = id.read();
+                        noTransaction++;
                         transactionFromFile(filename);
+                        db.insertTransaction(transactionList.get(noTransaction-1).getTotal());
+                        db.printAllContentTransaction();
                     }
                     else if(answer.equals("hand")){
                         String newT = null;
@@ -487,6 +508,8 @@ public class Application {
                                 od.writetoFile(content,"inventory.txt",true);
                             }
                             System.out.println("If you want to make a new transaction, type new, else type done.");
+                            db.insertTransaction(transactionList.get(noTransaction-1).getTotal());
+                            db.printAllContentTransaction();
                             newT = id.read();
                         }while (newT.equals("new"));
                     }

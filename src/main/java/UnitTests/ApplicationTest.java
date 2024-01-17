@@ -113,6 +113,7 @@ class ApplicationTest {
         transaction.addItem(book,false,1);
         transaction.addItem(album,false,3);
         assertEquals(transaction.getItemList().size(),2);
+        assertEquals(transaction.getItemList().get(book).entrySet().size(),2);
         transaction.doTotal();
         assertEquals(transaction.getTotal(),370.0);
     }

@@ -1,4 +1,4 @@
 Transaction number: 1
-Book ID = B666 borrow 4 x 6.0
 Album ID = A123 buy 3 x 125.0
+Book ID = B666 borrow 4 x 6.0
 The total of the transaction is 399.0
