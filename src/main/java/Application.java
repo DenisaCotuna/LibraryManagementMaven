@@ -1,5 +1,3 @@
-package Application;
-
 import Actions.Inventory;
 import Actions.Transaction;
 import Exceptions.InvalidItemTypeException;
@@ -28,6 +26,7 @@ public class Application {
     private InputDevice id;
     private OutputDevice od;
     private Integer noTransaction;
+
 
 
     public Application(InputDevice id, OutputDevice od) {
@@ -210,6 +209,8 @@ public class Application {
     }
 
     public void run() throws IOException, NegativeNumberException, NotEnoughCopiesException, InvalidItemTypeException {
+        DatabaseCommands db = new DatabaseCommands();
+        db.createNewTable();
         while (true)
         {
             System.out.println("Hello! What would you like to do?");
@@ -232,6 +233,13 @@ public class Application {
                         System.out.println("Type the name of the file you wish to add input from.");
                         String filename = id.read();
                         addItemsFromFIle(filename);
+                        for(Book b:inventory.getBooks()){
+                            db.insert(b.getID(),b.getCopies());
+                        }
+                        for(Album a: inventory.getAlbums()){
+                            db.insert(a.getID(),a.getCopies());
+                        }
+                        db.printAllContent();
                     }
                     else if(answer.equals("hand")) {
                         String cont = null;

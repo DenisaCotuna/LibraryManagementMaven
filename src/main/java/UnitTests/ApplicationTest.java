@@ -2,7 +2,6 @@ package UnitTests;
 
 import Actions.Inventory;
 import Actions.Transaction;
-import Application.Application;
 import Exceptions.NegativeNumberException;
 import Exceptions.NotEnoughCopiesException;
 import Items.Album;
@@ -132,14 +131,4 @@ class ApplicationTest {
         assertEquals(od.getOutputStream(),System.out);
     }
 
-    @Test
-    @DisplayName("Should create Application.Application")
-    void Application(){
-        InputDevice id = new InputDevice(System.in);
-        OutputDevice od = new OutputDevice(System.out);
-        Application app = new Application(id,od);
-        assertEquals(app.getId().getInputStream(),System.in);
-        assertEquals(app.getOd().getOutputStream(),System.out);
-        assertEquals(app.getNoTransaction(),0);
-    }
 }

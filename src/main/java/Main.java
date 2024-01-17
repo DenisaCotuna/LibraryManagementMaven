@@ -1,4 +1,3 @@
-import Application.Application;
 import Exceptions.InvalidItemTypeException;
 import Exceptions.NegativeNumberException;
 import Exceptions.NotEnoughCopiesException;
@@ -12,28 +11,6 @@ public class Main {
         InputDevice id = new InputDevice(System.in);
         OutputDevice od = new OutputDevice(System.out);
         Application app = new Application(id,od);
-
-        DatabaseCommands db = new DatabaseCommands();
-
-        db.createNewTable();
-        System.out.println("Adding album...");
-        db.insert("A13",5);
-        db.printAllContent();
-
-        System.out.println("Adding book...");
-        db.insert("B123",10);
-        db.printAllContent();
-
-        System.out.println("Correcting mistake");
-        db.update(1,"A321",10);
-        db.printAllContent();
-
-        System.out.println("Deleting book");
-        db.delete(1);
-        db.printAllContent();
-
-        System.out.println("Resetting the database...");
-        db.executeCustomQuery("DELETE from Inventory;");
 
         if(args.length == 0)  app.run();
         else{
