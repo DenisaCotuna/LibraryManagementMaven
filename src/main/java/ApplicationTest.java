@@ -1,5 +1,3 @@
-package UnitTests;
-
 import Actions.Inventory;
 import Actions.Transaction;
 import Exceptions.NegativeNumberException;
@@ -132,4 +130,14 @@ class ApplicationTest {
         assertEquals(od.getOutputStream(),System.out);
     }
 
+    @Test
+    @DisplayName("Should create and test Application")
+    void ApplicationTest(){
+        InputDevice id = new InputDevice(System.in);
+        OutputDevice od = new OutputDevice(System.out);
+        Application app = new Application(id,od);
+        assertEquals(app.getId().getInputStream(),System.in);
+        assertEquals(app.getOd().getOutputStream(),System.out);
+        assertEquals(app.getNoTransaction(),0);
+    }
 }
